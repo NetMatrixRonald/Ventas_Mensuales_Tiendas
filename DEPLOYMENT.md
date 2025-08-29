@@ -57,7 +57,7 @@ Este proyecto implementa un sistema de predicción de ventas mensuales por tiend
    - **Name:** `ventas-prediction-api`
    - **Environment:** `Python 3`
    - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `uvicorn api.main:app --host 0.0.0.0 --port $PORT`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
 ### 3. Variables de Entorno (Opcional)
 
@@ -168,7 +168,7 @@ ls -la
 ls -la models/
 
 # Probar API localmente
-python -m uvicorn api.main:app --reload
+python -m uvicorn main:app --reload
 
 # Ejecutar pruebas
 python test_api.py

@@ -33,7 +33,7 @@ git push -u origin main
    - **Name:** `ventas-prediction-api`
    - **Environment:** `Python 3`
    - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `uvicorn api.main:app --host 0.0.0.0 --port $PORT`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
 ### 3. ¡Listo!
 - Render desplegará automáticamente tu API
@@ -69,6 +69,8 @@ curl -X POST "https://tu-app.onrender.com/predict" \
 - `models/` - Archivos PKL del modelo
 - `render.yaml` - Configuración automática
 - `requirements.txt` - Dependencias
+- `POSTMAN_GUIDE.md` - Guía completa para Postman
+- `postman_collection.json` - Colección lista para importar
 
 ## 🎉 ¡Tu API estará lista en minutos!
 
@@ -77,6 +79,7 @@ Una vez desplegada, podrás:
 - ✅ Ver documentación automática
 - ✅ Monitorear el servicio
 - ✅ Escalar según necesidades
+- ✅ Probar con Postman usando la colección incluida
 
 ---
 

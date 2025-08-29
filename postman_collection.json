@@ -1,0 +1,346 @@
+{
+  "info": {
+    "name": "Ventas Prediction API",
+    "description": "API de Predicción de Ventas Mensuales por Tienda - CRISP-DM",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://tu-app.onrender.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - Información del Modelo",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        },
+        "description": "Obtener información básica del modelo"
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Estado del Servicio",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Verificar si el servicio está funcionando"
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Ejemplo de Uso",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/example",
+          "host": ["{{base_url}}"],
+          "path": ["example"]
+        },
+        "description": "Obtener ejemplo de datos de entrada"
+      },
+      "response": []
+    },
+    {
+      "name": "POST - Predicción Individual",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tienda_id\": 1,\n  \"empleados\": 20,\n  \"publicidad\": 5000,\n  \"ubicacion\": \"urbana\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/predict",
+          "host": ["{{base_url}}"],
+          "path": ["predict"]
+        },
+        "description": "Realizar predicción de ventas para una tienda"
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has prediction\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('prediction');",
+              "    pm.expect(jsonData.prediction).to.be.a('number');",
+              "});",
+              "",
+              "pm.test(\"Response has confidence\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData).to.have.property('confidence');",
+              "    pm.expect(jsonData.confidence).to.be.a('number');",
+              "    pm.expect(jsonData.confidence).to.be.above(0);",
+              "    pm.expect(jsonData.confidence).to.be.below(1);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Predicciones en Lote",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"data\": [\n    {\n      \"tienda_id\": 1,\n      \"empleados\": 20,\n      \"publicidad\": 5000,\n      \"ubicacion\": \"urbana\"\n    },\n    {\n      \"tienda_id\": 2,\n      \"empleados\": 15,\n      \"publicidad\": 3000,\n      \"ubicacion\": \"rural\"\n    },\n    {\n      \"tienda_id\": 3,\n      \"empleados\": 25,\n      \"publicidad\": 7000,\n      \"ubicacion\": \"suburbana\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/predict_batch",
+          "host": ["{{base_url}}"],
+          "path": ["predict_batch"]
+        },
+        "description": "Realizar predicciones para múltiples tiendas"
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Información Detallada del Modelo",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/model-info",
+          "host": ["{{base_url}}"],
+          "path": ["model-info"]
+        },
+        "description": "Obtener información técnica del modelo"
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Importancia de Características",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/feature-importance",
+          "host": ["{{base_url}}"],
+          "path": ["feature-importance"]
+        },
+        "description": "Ver la importancia de cada característica"
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Documentación Swagger",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/docs",
+          "host": ["{{base_url}}"],
+          "path": ["docs"]
+        },
+        "description": "Documentación interactiva de la API"
+      },
+      "response": []
+    },
+    {
+      "name": "Casos de Prueba",
+      "item": [
+        {
+          "name": "Caso 1: Tienda Urbana con Muchos Empleados",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 10,\n  \"empleados\": 30,\n  \"publicidad\": 8000,\n  \"ubicacion\": \"urbana\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Tienda urbana con muchos empleados y alta publicidad"
+          },
+          "response": []
+        },
+        {
+          "name": "Caso 2: Tienda Rural Pequeña",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 25,\n  \"empleados\": 5,\n  \"publicidad\": 1000,\n  \"ubicacion\": \"rural\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Tienda rural pequeña con pocos empleados y baja publicidad"
+          },
+          "response": []
+        },
+        {
+          "name": "Caso 3: Tienda Suburbana Mediana",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 50,\n  \"empleados\": 15,\n  \"publicidad\": 4000,\n  \"ubicacion\": \"suburbana\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Tienda suburbana mediana"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Casos de Error",
+      "item": [
+        {
+          "name": "Error 1: Ubicación Inválida",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 1,\n  \"empleados\": 20,\n  \"publicidad\": 5000,\n  \"ubicacion\": \"centro\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Ubicación inválida - debería dar error 422"
+          },
+          "response": []
+        },
+        {
+          "name": "Error 2: Datos Faltantes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 1,\n  \"empleados\": 20,\n  \"publicidad\": 5000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Falta el campo ubicacion - debería dar error 422"
+          },
+          "response": []
+        },
+        {
+          "name": "Error 3: Valores Fuera de Rango",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tienda_id\": 1,\n  \"empleados\": 100,\n  \"publicidad\": 50000,\n  \"ubicacion\": \"urbana\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/predict",
+              "host": ["{{base_url}}"],
+              "path": ["predict"]
+            },
+            "description": "Valores fuera del rango permitido - debería dar error 422"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
