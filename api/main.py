@@ -34,7 +34,7 @@ class PredictionRequest(BaseModel):
     tienda_id: int = Field(..., description="ID de la tienda", ge=1, le=100)
     empleados: float = Field(..., description="Número de empleados", ge=1, le=50)
     publicidad: float = Field(..., description="Gasto en publicidad", ge=0, le=20000)
-    ubicacion: str = Field(..., description="Tipo de ubicación", regex="^(rural|suburbana|urbana)$")
+    ubicacion: str = Field(..., description="Tipo de ubicación", pattern="^(rural|suburbana|urbana)$")
     
     class Config:
         schema_extra = {
