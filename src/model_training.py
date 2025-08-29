@@ -231,7 +231,7 @@ class ModelTrainer:
         
         print("📈 Gráfico de predicciones guardado en 'predictions_vs_actual.png'")
     
-    def save_model(self):
+    def save_model(self, metrics=None):
         """Guardar modelo entrenado"""
         print("\n💾 Guardando modelo...")
         
@@ -256,6 +256,15 @@ class ModelTrainer:
                 'target_col': self.processed_data['target_col']
             }
         }
+        
+        # Agregar métricas si están disponibles
+        if metrics:
+            model_info['metrics'] = metrics
+            model_info['training_info'] = {
+                'cv_scores': metrics['cv_scores'].tolist(),
+                'cv_mean': metrics['cv_mean'],
+                'cv_std': metrics['cv_std']
+            }
         
         joblib.dump(model_info, 'models/model_info.pkl')
         print("✅ Información del modelo guardada")
@@ -286,7 +295,7 @@ class ModelTrainer:
         self.plot_predictions_vs_actual(y_train, y_test, y_train_pred, y_test_pred)
         
         # Guardar modelo
-        self.save_model()
+        self.save_model(metrics)
         
         # Resumen final
         print("\n" + "=" * 60)
